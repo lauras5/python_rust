@@ -1,0 +1,106 @@
+:::Back to Basics:::
+
+1. strings are wild
+    --- invalid rust ---
+    fn print(input: str) {
+        println!("{}", input);
+    }
+    fn main() {
+        print("hello world");
+    }
+
+    ------> errors out w/
+    error[E077]: the size for values of type 'str' cannot be known
+    at compilation time
+
+    - compiled --> stores vars in the stack
+    - running --> stores data in heap
+
+    cannot determine str size during compilation so doesn't know how
+    much memory to allocate, can't pass "string slices", need string literal
+
+    fn print(input: String) {
+        println!("{}", input);
+    }
+    fn main() {
+        let string_literal = "hello world";
+        print(string_literal.to_string());
+    }
+
+    --- borrowing & making reference to string literal & pass as reference ---
+    fn print(input_string: &str) {
+        println("{}", input_string);
+    }
+    fn main() {
+        let test_string = &"Hello, World!";
+        print(test_string);
+    }
+
+2. floats and ints
+    - typing needs to be consistent, annoying but maintains safety
+
+    --- Don't do this ---
+    result = 1 + 2.2
+    result = result + 3.3
+    ------> float can't be added to int, also not mutable (rust assumes all vars immutable)
+
+    --- Do this ---
+    let mut result = 1.0 + 2.2
+    result = result + 3.3
+
+    signed vs unsigned:
+     - just confirm range needed before assigning
+
+3. vectors and arrays
+    --- looping through array in rust ---
+    let array: [i32; 3] = [1, 2, 3];
+    println!("array has {} elements", array.len());
+    for i in array.iter() {
+        println("{}", i);
+    }
+
+    --- structs & traits in later chapters ---
+    - vectors are on heap and expandable, ! == macro
+    let mut str_vector: Vec<&str> = vec!["one", "two", "three"];
+    println("{}", str_vector.len();
+    str_vector.push("four");
+    for i in str_vector.iter() {
+        println!("{}", i);
+    }
+
+    --- output ---
+    3
+    one
+    two
+    three
+    four
+
+4. replacing dictionaries w/ hashmaps
+    - enums
+    - hashmap that accepts strings and integers
+
+    --- defining Enum ---
+    enum Value {
+        Str(&'static str),      // static lifetime, for rest of program's lifetime
+        Int(i32),
+    }
+
+    --- create mutable hashmap ---
+    use std::collections::HashMap;
+    let mut map = HashMap::new();
+
+    --- insert into hashmap ---
+    map.insert("one", Value::Str("1"));
+    map.insert("two", Value::Int(2));
+
+    --- remember strongly typed, need to handle all cases or won't compile ---
+    for (_key, value) in &map {
+        match value {
+            Value::Str(inside_value) => {
+                println!("the following value is a str: {}", inside_value);
+            }
+            Value::Int(inside_value) => {
+                println!("the following value is an int: {}", inside_value);
+            }
+        }
+    }
