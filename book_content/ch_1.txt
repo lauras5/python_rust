@@ -104,3 +104,75 @@
             }
         }
     }
+
+    --- some & none ---
+    --- match for items not in hashmap ---
+    fn process_enum(value: &Value) -> () {
+        match value {
+            Value::Str(inside_value) => {
+                println!("the following value is a str: {}", inside_value);
+            }
+            Value::Int(inside_value) => {
+                println!("the following value is an int: {}", inside_value);
+            }
+        }
+    }
+
+    --- new get function ---
+    match map.get("test") {
+        Some(inside_value) => {
+            process_enum(inside_value);
+        }
+        None => {
+            println!("there is no value");
+        }
+    }
+
+5. Handling errors
+    - python has try/except blocks --> rust has ok/err
+    fn check_int_above_threshold(threshold: i3, get_result: Option<&Value>) -> Result<bool, &'static str> {
+        match get_result {
+            Some(inside_value) => {
+                match inside_value {
+                    Value::Str(_) => return Err("str value was supplied as opposed to an int which is needed"),
+                    Value::Int(int_value) => {
+                        if int_value > &threshold {
+                            return Ok(true)
+                        }
+                        return Ok(false)
+                    }
+                }
+            }
+            None => return Err("no value was supplied to be checked")
+        }
+    }
+
+    --- implement fn ---
+    let result: Option<&Value> = map.get("two");
+    let above_threshold: bool = check_int_above_threshold(1, result).unwrap();
+    println!("it is {} that the threshold is breached", above_threshold);
+    --- output ---
+    it is true that the threshold is breached
+    ** edit call to see diff messages
+
+6. ownership
+    - memory save w/o garbage collector <3
+    - keeps resources low and speed high
+    COPY
+        let x = 5;
+        let y = x;
+        - int: bind value to x, make copy of x and bind to y
+        ** strings go out of scope, avoid double free
+        let s1 = String::from("hello");
+        let s2 = s1;
+        ----> outputs
+        error[E0382]: borrow of moved value: `s1`
+    MOVE
+        ** first var no longer owns the value
+        let one: String = String::from("one");
+        let two: String = one + " two";
+
+        ---> value borrowed after move when trying to output 'one'
+        --- instead do ---
+        let two: String = one.to_owned() + " two";
+    Immutable Borrow...
