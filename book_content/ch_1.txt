@@ -175,4 +175,10 @@
         ---> value borrowed after move when trying to output 'one'
         --- instead do ---
         let two: String = one.to_owned() + " two";
-    Immutable Borrow...
+    Immutable Borrow
+        value borrowing value doesn't have ownership
+        **check example code**
+    Mutable borrow
+        locked until borrower releases it since it might change value
+
+metaprogramming w/ macros...
