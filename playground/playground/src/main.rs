@@ -1,21 +1,19 @@
-use std::io;
+// use std::io;
 
 fn main() {
+    let mut users: Vec<User> = Vec::new(); // vector of users
     // user account instance
-    let mut user1 = User {
-        email: String::from("someone@example.com"),
-        username: String::from("someusername123"),
-        active: true,
-        sign_in_count: 1,
-    };
-
-    // let user2 : User = build_user(String::from("someemail@example.com"), String::from("someusername345"));
-
+    let mut user1: User = build_user(String::from("someone@example.com"), String::from("someusername123"));
+    let user2: User = build_user(String::from("anotherone@email.com"), String::from("sonename345"));
     // entire instance must be mutable if we are changing. rust wont allow only certain fields
     user1.email = String::from("anotheremail@email.com");
     user1.update_count(5);
     user1.print_count();
     user1.print_email();
+
+    users.push(user1);
+    users.push(user2);
+    print_users(&users);
 }
 
 // user account + struct fields
@@ -35,6 +33,14 @@ fn build_user(email: String, username: String) -> User {
     }
 }
 
+fn print_users(users: &Vec<User>) -> () {
+    println!("---- List of Users ----");
+    for i in users {
+        println!("  {}", i.username);
+    }
+    println!("--------- END ---------")
+}
+
 impl User {
     fn update_count(&mut self, count: u64) -> () {
         self.sign_in_count += count;
@@ -48,3 +54,4 @@ impl User {
         println!("User {}'s email is {}.", self.username, self.email);
     }
 }
+
