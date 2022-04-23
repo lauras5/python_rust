@@ -181,4 +181,5 @@
     Mutable borrow
         locked until borrower releases it since it might change value
 
-metaprogramming w/ macros...
+metaprogramming w/ macros
+    try to avoid, alters state
