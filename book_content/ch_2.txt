@@ -1,1 +1,25 @@
 structuring code in rust
+1. Create rust file and run it
+2. Create simple app using Cargo
+3. Run app using Cargo
+4. Manage dependencies w/ Cargo
+5. ust third-party crate to serialize JSON
+6. Document app w/ Cargo
+
+** code being compiled & executed **
+laurasalcido@Lauras-MacBook-Pro wealth_manager % cargo run
+   Compiling wealth_manager v0.1.0 (/Users/laurasalcido/Desktop/PROGRAMMING/PYTHON/python_rust/wealth_manager)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.16s
+     Running `target/debug/wealth_manager`
+Hello, world!
+
+** running a release compiles optimized version of app **
+cargo run --release
+(found in ./target/release/)
+
+** run without running **
+cargo build
+
+** docs **
+cargo doc
+cargo doc --open
