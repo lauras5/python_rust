@@ -14,6 +14,15 @@ fn main() {
     users.push(user1);
     users.push(user2);
     print_users(&users);
+
+    let base_rate: f32 = 0.03;
+    // closure ex.
+    let calculate_interest = |loan_amount: &f32| {
+        return loan_amount * &base_rate
+    };
+    println!("the total interest to be paid is: {}", calculate_interest(&32567.6));
+
+
 }
 
 // user account + struct fields
